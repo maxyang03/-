@@ -10,8 +10,8 @@ import { useApiKeyForServices } from './useApiKeyForServices'
  */
 export function useAudioPlayer(
   translated: TranslatedSegment[],
-  currentIndex: number,
-  playMode: PlayMode,
+  _currentIndex: number,
+  _playMode: PlayMode,
 ) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLoading, setIsLoading] = useState(false)

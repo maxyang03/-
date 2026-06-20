@@ -23,7 +23,7 @@ async function hmacSha256(key: ArrayBuffer, message: string): Promise<ArrayBuffe
 
 async function hmacSha256Hex(key: ArrayBuffer, message: string): Promise<string> {
   const sig = await hmacSha256(key, message)
-  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('')
+  return Array.from(new Uint8Array(sig as ArrayBuffer)).map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
 /**
@@ -58,7 +58,7 @@ async function signHeaders(
   ].join('\n')
 
   // Signature
-  const kDate = await hmacSha256(encoder.encode(`TC3${secretKey}`), date)
+  const kDate = await hmacSha256(encoder.encode(`TC3${secretKey}`).buffer as ArrayBuffer, date)
   const kService = await hmacSha256(kDate, service)
   const kSigning = await hmacSha256(kService, 'tc3_request')
   const signature = await hmacSha256Hex(kSigning, stringToSign)

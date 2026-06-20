@@ -1,5 +1,5 @@
 import { FFmpeg } from '@ffmpeg/ffmpeg'
-import { fetchFile, toBlobURL } from '@ffmpeg/util'
+import { toBlobURL } from '@ffmpeg/util'
 
 // ===================================================
 // ffmpeg.wasm 单例
@@ -21,8 +21,8 @@ export async function loadFFmpeg(onProgress?: (msg: string) => void): Promise<FF
   const instance = new FFmpeg()
 
   // 监听日志输出，用作进度上报
-  instance.on('log', ({ message }) => {
-    if (onProgress) onProgress(message)
+  instance.on('log', (logEvent: { message: string }) => {
+    if (onProgress) onProgress(logEvent.message)
   })
 
   loadingPromise = (async () => {
@@ -110,7 +110,7 @@ export async function extractAudio(
     // 清理失败不阻塞
   }
 
-  return new Blob([outputData], { type: 'audio/wav' })
+  return new Blob([outputData as BlobPart], { type: 'audio/wav' })
 }
 
 /**

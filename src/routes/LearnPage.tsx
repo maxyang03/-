@@ -42,7 +42,6 @@ export default function LearnPage() {
 
   const {
     currentIndex,
-    isUserScrolling,
     scrollContainerRef,
     registerSentenceRef,
     onScroll,

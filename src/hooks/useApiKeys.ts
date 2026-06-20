@@ -241,10 +241,10 @@ async function testTencentConnection(
   ].join('\n')
 
   // 3. Signature
-  const kDate = await hmacSha256(new TextEncoder().encode(`TC3${secretKey}`), date)
+  const kDate = await hmacSha256(new TextEncoder().encode(`TC3${secretKey}`).buffer as ArrayBuffer, date)
   const kService = await hmacSha256(kDate, service)
   const kSigning = await hmacSha256(kService, 'tc3_request')
-  const signature = Array.from(new Uint8Array(await hmacSha256(kSigning, stringToSign)))
+  const signature = Array.from(new Uint8Array((await hmacSha256(kSigning, stringToSign)) as ArrayBuffer))
     .map(b => b.toString(16).padStart(2, '0'))
     .join('')
 

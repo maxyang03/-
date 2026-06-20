@@ -1,5 +1,5 @@
 import Dexie, { type Table } from 'dexie'
-import type { VideoMeta, SubtitleSegment, TranslatedSegment, StudyRecord } from '../types'
+import type { VideoMeta, TranslatedSegment, StudyRecord } from '../types'
 
 /** API Key 加密存储 */
 export interface EncryptedKey {
